@@ -20,53 +20,85 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(UIColor.systemGroupedBackground)
-                    .ignoresSafeArea()
+                LinearGradient(
+                    colors: [.deepBlue, .primaryPurple],
+                    startPoint: .topLeading, endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
 
                 VStack {
                     Form {
-                        Section("When do you want to wake up?") {
+                        Section {
                             DatePicker(
                                 "Please enter a time", selection: $wakeUp,
                                 displayedComponents: .hourAndMinute
                             )
                             .labelsHidden()
+                            .frame(maxWidth: .infinity)
+                            .datePickerStyle(.wheel)
+                            .padding(.vertical)
+                        } header: {
+                            Text("When do you want to wake up?")
+                                .font(.title3.bold())
+                                .foregroundStyle(.gold)
+                                .textCase(nil)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
 
-                        Section("How much sleep do you need?") {
+                        Section {
                             Stepper(
                                 "\(sleepAmount.formatted()) hours",
-                                value: $sleepAmount, in: 4...12, step: 0.25)
+                                value: $sleepAmount, in: 4...12, step: 0.25
+                            )
+                        } header: {
+                            Text("How much sleep do you need?")
+                                .font(.title3.bold())
+                                .foregroundStyle(.gold)
+                                .textCase(nil)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
 
-                        Section("Daily coffee intake") {
+                        Section {
                             Picker("Number of cups", selection: $coffeeAmount) {
                                 ForEach(1...20, id: \.self) { number in
-                                    Text(
-                                        number == 1 ? "1 cup" : "\(number) cups"
-                                    )
+                                    Text(number == 1 ? "1 cup" : "\(number) cups")
                                 }
                             }
+                        } header: {
+                            Text("Daily coffee intake")
+                                .font(.title3.bold())
+                                .foregroundStyle(.gold)
+                                .textCase(nil)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
                     .scrollContentBackground(.hidden)
+                    .foregroundStyle(.white)
 
                     Button(action: calculateBedTime) {
                         Text("Calculate")
                             .frame(maxWidth: .infinity)
                             .padding()
+                            .background(Color.gold)
+                            .foregroundStyle(.deepBlue)
+                            .font(.headline)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    .buttonStyle(.borderedProminent)
                     .padding()
                 }
             }
             .navigationTitle("BetterRest")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbarBackground(.deepBlue, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .alert(alertTitle, isPresented: $showingAlert) {
                 Button("OK") {}
             } message: {
                 Text(alertMessage)
             }
         }
+        .preferredColorScheme(.dark)
     }
 
     func calculateBedTime() {
