@@ -20,11 +20,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(
-                    colors: [.deepBlue, .primaryPurple],
-                    startPoint: .topLeading, endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                Color(UIColor.systemGray6)
+                    .ignoresSafeArea()
 
                 VStack {
                     Form {
@@ -41,9 +38,8 @@ struct ContentView: View {
                         } header: {
                             Text("When do you want to wake up?")
                                 .font(.title3.bold())
-                                .foregroundStyle(.gold)
                                 .textCase(nil)
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
 
                         Section {
@@ -65,9 +61,8 @@ struct ContentView: View {
                         } header: {
                             Text("How much sleep do you need?")
                                 .font(.title3.bold())
-                                .foregroundStyle(.gold)
                                 .textCase(nil)
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
 
                         Section {
@@ -80,9 +75,8 @@ struct ContentView: View {
                         } header: {
                             Text("Daily coffee intake")
                                 .font(.title3.bold())
-                                .foregroundStyle(.gold)
                                 .textCase(nil)
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                     .scrollContentBackground(.hidden)
@@ -92,8 +86,8 @@ struct ContentView: View {
                         Text("Calculate")
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.gold)
-                            .foregroundStyle(.deepBlue)
+                            .background(Color.deepBlue)
+                            .foregroundStyle(.white)
                             .font(.headline)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
@@ -102,10 +96,6 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("BetterRest")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbarBackground(.deepBlue, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
             .alert(alertTitle, isPresented: $showingAlert) {
                 Button("OK") {}
             } message: {
