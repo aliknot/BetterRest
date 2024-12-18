@@ -37,6 +37,7 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity)
                             .datePickerStyle(.wheel)
                             .padding(.vertical)
+                            .accessibilityHint("Select your desired wake up time")
                         } header: {
                             Text("When do you want to wake up?")
                                 .font(.title3.bold())
@@ -50,6 +51,17 @@ struct ContentView: View {
                                 "\(sleepAmount.formatted()) hours",
                                 value: $sleepAmount, in: 4...12, step: 0.25
                             )
+                            .accessibilityValue("\(sleepAmount.formatted()) hours of sleep")
+                            .accessibilityAdjustableAction { direction in
+                                switch direction {
+                                case .increment:
+                                    if sleepAmount < 12 { sleepAmount += 0.25 }
+                                case .decrement:
+                                    if sleepAmount > 4 { sleepAmount -= 0.25 }
+                                @unknown default:
+                                    break
+                                }
+                            }
                         } header: {
                             Text("How much sleep do you need?")
                                 .font(.title3.bold())
@@ -64,6 +76,7 @@ struct ContentView: View {
                                     Text(number == 1 ? "1 cup" : "\(number) cups")
                                 }
                             }
+                            .accessibilityHint("Select how many cups of coffee you drink per day")
                         } header: {
                             Text("Daily coffee intake")
                                 .font(.title3.bold())
@@ -84,6 +97,7 @@ struct ContentView: View {
                             .font(.headline)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
+                    .accessibilityHint("Calculates your ideal bedtime based on your selections")
                     .padding()
                 }
             }
